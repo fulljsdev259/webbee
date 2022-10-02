@@ -73,6 +73,7 @@ export const CategoryItem: React.FC<CategoryItemTypes> = ({
     }
   };
 
+  // get title
   const renderCardTitle = useCallback(() => {
     let title = "Title";
     const keys = Object.keys(values);
@@ -81,14 +82,16 @@ export const CategoryItem: React.FC<CategoryItemTypes> = ({
         const value = details[key];
         if (value.value == titleFieldName) {
           if (value.type === fieldType.DATE) {
-            return new Date(values[key]).toLocaleDateString();
+            return new Date(values[key] || new Date()).toLocaleDateString();
           } else if (typeof values[key] === 'boolean') {
             return String(values[key])
           } else {
             return values[key];
           }
-        }
+        } 
       }
+
+      return values[keys[0]]
     }
     return title;
   }, [values, details, titleFieldName]);
