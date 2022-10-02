@@ -20,10 +20,13 @@ const addCategory = (state: any, action: any) => {
 
 const deleteCategory = (state: any, action: any) => {
   const categories = { ...state.categories }
+  const categoriesItems = { ...state.categoriesItems }
   delete categories[action.payload.id]
+  categoriesItems?.[action.payload.id] && delete categoriesItems[action.payload.id]
 
   return update(state, {
     categories: { $set: categories },
+    categoriesItems: { $set: categoriesItems },
   });
 };
 
