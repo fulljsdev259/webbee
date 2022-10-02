@@ -15,3 +15,17 @@ export function debounce (fun: Function, delay: number) {
         }, delay)
     }
 }
+
+/**
+ * @example
+ * // returns true - as date is in correct format
+ * @param {any} date -  date is any type
+ * isValidDate('03/05/2022');
+ * @example
+ * // returns false - as date is not in correct format
+ * @param {any} date - date is any type
+ * isValidDate('03/05/2022a');
+ */
+export const isValidDate = (date: any) => {
+   return !isNaN(new Date(date).getTime())
+}

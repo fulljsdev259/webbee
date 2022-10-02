@@ -13,11 +13,11 @@ export const Dashboard: React.FC<DashboardInterface> = () => {
       {keys.map((categoryId) => {
         const item = categories[categoryId];
         return (
-          <div>
+          <div key={categoryId} >
             <div className="sticky-header">
               <h3> {item.categoryName.value}</h3>
             </div>
-            <CategoryType key={categoryId} categoryId={categoryId} />
+            <CategoryType categoryId={categoryId} />
           </div>
         );
       })}

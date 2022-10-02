@@ -4,6 +4,7 @@ import { FormInput } from "../common/form-input";
 import { fieldType } from "../../services/static-data";
 import { Checkbox } from "../common/checkbox";
 import { CustomDatePicker } from "../common/datepicker";
+import { isValidDate } from "../../utils/formats";
 
 interface CategoryItemTypes {
   details?: any;
@@ -53,7 +54,7 @@ export const CategoryItem: React.FC<CategoryItemTypes> = ({
         return (
           <Checkbox
             onChange={(value: string) => onValueChange(item.id, !value)}
-            value={values?.[item.id] ? true : false}
+            value={!!values[item.id]}
             label={item.value}
             key={item.id}
           />
@@ -73,28 +74,43 @@ export const CategoryItem: React.FC<CategoryItemTypes> = ({
     }
   };
 
-  // get title
+  // get current title even if user is typing
   const renderCardTitle = useCallback(() => {
-    let title = "Title";
+    let title: any, defaultKey: string = '';
     const keys = Object.keys(values);
+
     if (keys.length) {
       for (let key in details) {
+        if(!defaultKey) { defaultKey = key }
         const value = details[key];
         if (value.value == titleFieldName) {
+          console.log(value.type, 'value.typevalue.type');
+          
           if (value.type === fieldType.DATE) {
-            return new Date(values[key] || new Date()).toLocaleDateString();
-          } else if (typeof values[key] === 'boolean') {
-            return String(values[key])
+
+            // check if user has changed any attribute to date, then the value will not be applicable to date instance
+            title = isValidDate(values[key]) ? new Date(values[key]).toLocaleDateString() : '';
+          } else if (value.type === fieldType.CHECKBOX) {
+
+            // check if user has changed any attribute to checkbox: boolean
+            title = !!values[key]
+          } else if (value.type === fieldType.NUMBER) { 
+
+            // check if user has changed any attribute to number, text of any will not be apply to text field then showing the header as empty and let the user type the number
+            title = isNaN(Number(values[key])) ? '' : values[key]
           } else {
-            return values[key];
+            title = values[key];
           }
         } 
       }
-
-      return values[keys[0]]
+      // if no attribute was selected as a title or not defined any attribute as Title then, considering the first attribute by default
+      title = title ?? values[defaultKey]
     }
-    return title;
-  }, [values, details, titleFieldName]);
+    // show Title by default
+     title = title ?? 'Title'
+    return String(title);
+  }, [values, details, titleFieldName]);  
+
   
   return (
     <Card>

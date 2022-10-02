@@ -6,6 +6,7 @@ enum componentsId {
   TEXTINPUT_DROPDOWN = "textInputDropdown",
 }
 
+// different field type for the category's attributes for different characteristics
 export enum fieldType {
   TEXT = "text",
   NUMBER = "number",
@@ -14,6 +15,7 @@ export enum fieldType {
   REMOVE = "remove",
 }
 
+// keep the field type data in array as we don't require to mutate it in the future
 export const fieldTypes = [
   {
     id: getUUID(),
@@ -47,6 +49,7 @@ export const newAddableFieldTypes = [...fieldTypes].splice(
   fieldTypes.length - 1
 );
 
+// Category defails data structure, Note: all the data is being mutated by their key as most of the data is store in a obj
 export const getCategoryDefaultDetails = () => {
   const categoryDefaultDetails = {
     id: getUUID(),
