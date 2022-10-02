@@ -76,42 +76,43 @@ export const CategoryItem: React.FC<CategoryItemTypes> = ({
 
   // get current title even if user is typing
   const renderCardTitle = useCallback(() => {
-    let title: any, defaultKey: string = '';
+    let title: any,
+      defaultKey: string = "";
     const keys = Object.keys(values);
 
     if (keys.length) {
       for (let key in details) {
-        if(!defaultKey) { defaultKey = key }
+        if (!defaultKey) {
+          defaultKey = key;
+        }
         const value = details[key];
         if (value.value == titleFieldName) {
-          console.log(value.type, 'value.typevalue.type');
-          
           if (value.type === fieldType.DATE) {
-
             // check if user has changed any attribute to date, then the value will not be applicable to date instance
-            title = isValidDate(values[key]) ? new Date(values[key]).toLocaleDateString() : '';
+            title = isValidDate(values[key])
+              ? new Date(values[key]).toLocaleDateString()
+              : "";
           } else if (value.type === fieldType.CHECKBOX) {
-
             // check if user has changed any attribute to checkbox: boolean
-            title = !!values[key]
-          } else if (value.type === fieldType.NUMBER) { 
-
+            title = !!values[key];
+          } else if (value.type === fieldType.NUMBER) {
             // check if user has changed any attribute to number, text of any will not be apply to text field then showing the header as empty and let the user type the number
-            title = isNaN(Number(values[key])) ? '' : values[key]
+            title = isNaN(Number(values[key])) ? "" : values[key];
           } else {
             title = values[key];
           }
-        } 
+
+          break;
+        }
       }
       // if no attribute was selected as a title or not defined any attribute as Title then, considering the first attribute by default
-      title = title ?? values[defaultKey]
+      title = title ?? values[defaultKey];
     }
     // show Title by default
-     title = title ?? 'Title'
+    title = title ?? "Title";
     return String(title);
-  }, [values, details, titleFieldName]);  
+  }, [values, details, titleFieldName]);
 
-  
   return (
     <Card>
       <Card.Header className="card-header-item">
