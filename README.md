@@ -1,4 +1,4 @@
-# PokerBaazi
+# Webbee Test
 
 This project currently includes:
 
@@ -6,8 +6,6 @@ This project currently includes:
 - React Router DOM
 - Redux
 - Redux Saga
-- Websocket
-- Axios
 
 ## Quick Start do >
 
@@ -27,8 +25,6 @@ Project's structure will look similar to this:
 sensibull-test
 ├── src
 │   ├── components
-│   ├── config
-│   │   └── index.js
 │   │   
 │   ├── redux
 │   │   ├── actions.js
@@ -38,9 +34,7 @@ sensibull-test
 │   │   └── store.ts
 │   ├── pages
 │   ├── routes
-│   ├── screens
 │   ├── services
-│   ├── socket
 │   ├── custom-hooks
 │   └── utils
 ├── App.js
@@ -50,21 +44,20 @@ sensibull-test
 
 ```
 
-### ./app directory
+### ./src directory
 
 Included in an Ignite boilerplate project is the `app` directory. This is a directory you would normally have to create when using vanilla React Js.
 
 The inside of the src directory looks similar to the following:
 
 ```
-app
+src
 │── components
-│── i18n
-├── models
-├── navigation
-├── screens
+├── custom-hooks
+├── pages
+├── redux
+├── routes
 ├── services
-├── theme
 ├── utils
 └── app.tsx
 ```
