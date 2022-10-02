@@ -1,10 +1,10 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import Card from "react-bootstrap/Card";
 import { FormInput } from "../common/form-input";
 import { fieldType } from "../../services/static-data";
 import { Checkbox } from "../common/checkbox";
 import { CustomDatePicker } from "../common/datepicker";
-import { isValidDate } from "../../utils/formats";
+import { getFormattedValue } from "../../utils/formats";
 
 interface CategoryItemTypes {
   details?: any;
@@ -87,25 +87,11 @@ export const CategoryItem: React.FC<CategoryItemTypes> = ({
         }
         const value = details[key];
         if (value.value == titleFieldName) {
-          if (value.type === fieldType.DATE) {
-            // check if user has changed any attribute to date, then the value will not be applicable to date instance
-            title = isValidDate(values[key])
-              ? new Date(values[key]).toLocaleDateString()
-              : "";
-          } else if (value.type === fieldType.CHECKBOX) {
-            // check if user has changed any attribute to checkbox: boolean
-            title = !!values[key];
-          } else if (value.type === fieldType.NUMBER) {
-            // check if user has changed any attribute to number, text of any will not be apply to text field then showing the header as empty and let the user type the number
-            title = isNaN(Number(values[key])) ? "" : values[key];
-          } else {
-            title = values[key];
-          }
-
+          title = getFormattedValue(values[key], value.type)
           break;
         }
       }
-      // if no attribute was selected as a title or not defined any attribute as Title then, considering the first attribute by default
+      // if no attribute was selected as a title or not defined any attribute as Title then, considering the first attribute by default itself
       title = title ?? values[defaultKey];
     }
     // show Title by default

@@ -13,6 +13,6 @@ export const CategoryTypeWrapper: React.FC<CategoryTypeInterface> = () => {
   if (categories[categoryId]) {
     return <CategoryType categoryId={categoryId} />;
   } else {
-    return <div> Not found</div>;
+    return <div className="m-3" >Page Not found</div>;
   }
 };
