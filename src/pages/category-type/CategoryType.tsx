@@ -5,26 +5,23 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { reduxConstants } from "../../redux/constants";
-import { useParams } from "react-router";
 import { CategoryItem } from "../../components/categoryItem";
 
-interface CategoryTypeInterface {}
+interface CategoryTypeInterface {
+  categoryId: string
+}
 
-export const CategoryType: React.FC<CategoryTypeInterface> = () => {
-  const { categoryId }: any = useParams();
+export const CategoryType: React.FC<CategoryTypeInterface> = ({ categoryId }) => {
+
 
   const dispatch = useDispatch();
   const { categories, categoriesItems } = useSelector(
     (state: any) => state.manageTypes
   );
+
   const relatedItems = categoriesItems?.[categoryId];
-  const attributes = categories[categoryId].attributes;
-
-  console.log(categories, categoriesItems, "categoriesItemscategoriesItems");
-
-  if (categories.categoryId) {
-    return <div>'Not found'</div>;
-  }
+  const attributes = categories?.[categoryId]?.attributes;
+  const titleField: any = categories?.[categoryId]?.titleField?.value;
 
   const addCategory = () => {
     dispatch({
@@ -33,8 +30,6 @@ export const CategoryType: React.FC<CategoryTypeInterface> = () => {
     });
   };
 
-  const handleChange = () => {};
-
   const deleteItem = (itemId: string) => {
     dispatch({
       payload: { categoryId, itemId },
@@ -42,34 +37,42 @@ export const CategoryType: React.FC<CategoryTypeInterface> = () => {
     });
   };
 
-  const updateCategoryItemFied = (attributeId: string, itemId: string, value: string) => {
+  const updateCategoryItemFied = (
+    attributeId: string,
+    itemId: string,
+    value: string
+  ) => {
     dispatch({
       payload: { categoryId, itemId, attributeId, value },
       type: reduxConstants.UDPATE_CATEGORY_ITEM,
     });
-  }
+  };
 
   return (
     <Container fluid>
       <Row xs={1} sm={2} md={3} lg={4}>
         {Object.keys(relatedItems?.items || {}).map((key) => {
-          return ( 
+          return (
             <Col key={key} className="category-col mb-4">
               <CategoryItem
                 deleteItem={() => deleteItem(key)}
                 values={relatedItems.items[key]}
-                // attributeTypes={attributeTypes}
+                titleFieldName={titleField}
                 typeDetails={categoriesItems}
                 details={attributes}
-                onValueChange={(attributeId: string, value: string) => updateCategoryItemFied(attributeId, key, value)}
+                onValueChange={(attributeId: string, value: string) =>
+                  updateCategoryItemFied(attributeId, key, value)
+                }
               />
             </Col>
-          )
+          );
         })}
-        <Col className="category-col mb-4">
-          <Button onClick={addCategory} variant="primary">
-            Add Item
-          </Button>
+        <Col key='add-btn-wrapper-col' className="category-col mb-4">
+          <div className="add-btn-wrapper" >
+            <Button onClick={addCategory} variant="primary">
+              Add Item
+            </Button>
+          </div>
         </Col>
       </Row>
     </Container>

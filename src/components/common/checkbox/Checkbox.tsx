@@ -12,8 +12,8 @@ export const Checkbox: React.FC<CheckboxTypes> = ({
     onChange = () => null
 }) => {
     return (
-        <Form.Check type={'checkbox'}>
-            <Form.Check onClick={() => onChange(value)}  type={'checkbox'} checked={value} />
+        <Form.Check className='mt-3 mb-3' type={'checkbox'}>
+            <Form.Check onChange={() => onChange(value)}  type={'checkbox'} checked={value} />
             <Form.Check.Label>{label}</Form.Check.Label>
         </Form.Check>
     )

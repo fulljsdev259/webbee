@@ -1,4 +1,4 @@
-import { Categories, Dashboard, CategoryType } from '../pages'
+import { Categories, Dashboard, CategoryTypeWrapper } from '../pages'
 
 export const routes = {
   root:
@@ -12,11 +12,11 @@ export const routes = {
         },
         {
           path: "type",
-          element: <CategoryType />,
+          element: <CategoryTypeWrapper />,
         },
         {
           path: "type/:categoryId",
-          element: <CategoryType />,
+          element: <CategoryTypeWrapper />,
         },
       //   {
       //     path: "*",

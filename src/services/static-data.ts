@@ -7,11 +7,11 @@ enum componentsId {
 }
 
 export enum fieldType {
-  TEXT = 'text',
+  TEXT = "text",
   NUMBER = "number",
   DATE = "date",
-  CHECKBOX = 'checkbox',
-  REMOVE = 'remove',
+  CHECKBOX = "checkbox",
+  REMOVE = "remove",
 }
 
 export const fieldTypes = [
@@ -70,13 +70,13 @@ export const getCategoryDefaultDetails = () => {
       type: "dropdown",
     },
     attributes: {
-        [getUUID()] : {
-            value: '',
-            type: fieldType.TEXT,
-            dropdownText: 'Text'
-        }
+      [getUUID()]: {
+        value: "",
+        type: fieldType.TEXT,
+        dropdownText: "Text",
+      },
     },
-    attributeTypes: []
+    attributeTypes: [],
   };
 
   return JSON.parse(JSON.stringify(categoryDefaultDetails));

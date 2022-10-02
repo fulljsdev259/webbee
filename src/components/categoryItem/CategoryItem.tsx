@@ -1,56 +1,53 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import Card from "react-bootstrap/Card";
-import { InputDropdown } from "../common/input-dropdown";
-import { Select } from "../common/select";
-import { Divider } from "../common/divider";
-import { CustomDropdown } from "../common/dropdown";
 import { FormInput } from "../common/form-input";
-import { fieldType, newAddableFieldTypes } from "../../services/static-data";
-import { useDispatch } from "react-redux";
-import { reduxConstants } from "../../redux/constants";
-import { debounce } from "../../utils/formats";
+import { fieldType } from "../../services/static-data";
 import { Checkbox } from "../common/checkbox";
 import { CustomDatePicker } from "../common/datepicker";
 
 interface CategoryItemTypes {
   details?: any;
-//   attributeTypes?: Array<string>;
   deleteItem?: () => void;
   onValueChange?: (id: string, value: any) => void;
-  value?: any;
-  typeDetails?: any,
-  values?: any
+  typeDetails?: any;
+  values?: any;
+  titleFieldName?: string;
 }
 
 export const CategoryItem: React.FC<CategoryItemTypes> = ({
   details = {},
   deleteItem = () => null,
   onValueChange = () => null,
-  value,
-  values = {}
+  values = {},
+  titleFieldName = "",
 }) => {
-  console.log(details, "details");
-
   const getComponent = (item: any) => {
-
     switch (item.type) {
       case fieldType.TEXT:
         return (
-          <FormInput
-            value={values[item.id]}
-            lable={item.value}
-            type={item.type}
-            onChange={(value: string) => onValueChange(item.id, value)}
-          />
+          <>
+            <div className="mt-3" />
+            <FormInput
+              value={values[item.id]}
+              key={item.id}
+              lable={item.value}
+              type={item.type}
+              onChange={(value: string) => onValueChange(item.id, value)}
+            />
+          </>
         );
       case fieldType.NUMBER:
         return (
-          <FormInput
-          value={values[item.id]}
-            lable={item.value}
-            type={item.type}
-            onChange={(value: string) => onValueChange(item.id, value)}
-          />
+          <>
+            <div className="mt-3" />
+            <FormInput
+              value={values[item.id]}
+              key={item.id}
+              lable={item.value}
+              type={item.type}
+              onChange={(value: string) => onValueChange(item.id, value)}
+            />
+          </>
         );
       case fieldType.CHECKBOX:
         return (
@@ -58,30 +55,58 @@ export const CategoryItem: React.FC<CategoryItemTypes> = ({
             onChange={(value: string) => onValueChange(item.id, !value)}
             value={values?.[item.id] ? true : false}
             label={item.value}
+            key={item.id}
           />
         );
 
       case fieldType.DATE:
-        return <CustomDatePicker />;
+        return (
+          <CustomDatePicker
+            value={values[item.id]}
+            key={item.id}
+            label={item.value}
+            onChange={(value: any) => onValueChange(item.id, value)}
+          />
+        );
       default:
         break;
     }
   };
 
+  const renderCardTitle = useCallback(() => {
+    let title = "Title";
+    const keys = Object.keys(values);
+    if (keys.length) {
+      for (let key in details) {
+        const value = details[key];
+        if (value.value == titleFieldName) {
+          if (value.type === fieldType.DATE) {
+            return new Date(values[key]).toLocaleDateString();
+          } else if (typeof values[key] === 'boolean') {
+            return String(values[key])
+          } else {
+            return values[key];
+          }
+        }
+      }
+    }
+    return title;
+  }, [values, details, titleFieldName]);
+  
   return (
     <Card>
-      <Card.Header>
-        <div>{"categoryNewName"}</div>
-        <div onClick={deleteItem}>delete</div>
+      <Card.Header className="card-header-item">
+        <div>{renderCardTitle()}</div>
+        <i onClick={deleteItem} className="fa fa-trash-o"></i>
       </Card.Header>
       <Card.Body>
-        {
-            Object.keys(details).map((key) => {
-                return getComponent({ ...details[key], id: key })
-            })
-        }
-
-        <Divider />
+        {Object.keys(details).map((key) => {
+          return (
+            <React.Fragment key={key}>
+              {getComponent({ ...details[key], id: key })}{" "}
+            </React.Fragment>
+          );
+        })}
       </Card.Body>
     </Card>
   );

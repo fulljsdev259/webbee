@@ -94,9 +94,9 @@ export const Category: React.FC<CategoryTypes> = ({ details = {} }) => {
 
   return (
     <Card>
-      <Card.Header>
+      <Card.Header className='card-header-item'>
         <div>{categoryName.value}</div>
-        <div onClick={deleteCategory}>delete</div>
+        <i onClick={deleteCategory} className="fa fa-trash-o"></i>
       </Card.Header>
       <Card.Body>
         <FormInput

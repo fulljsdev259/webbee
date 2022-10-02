@@ -1,7 +1,10 @@
+// generate unique id
 export const getUUID = function(){
     return Date.now().toString(36) + Math.random().toString(36).substr(2);
 }
 
+
+// bebounce the user handles
 export function debounce (fun: Function, delay: number) {
     let timer: any
     return function (...props: any[]) {

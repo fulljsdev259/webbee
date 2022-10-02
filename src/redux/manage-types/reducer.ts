@@ -115,8 +115,6 @@ const deleteCategoryItem = (state: any, action: any) => {
 
 const updateCategoryItem = (state: any, action: any) => {
 
-  console.log(action, '>>>>>>>');
-  
   const { categoryId, itemId, attributeId, value } = action.payload
   const categoriesItems = { ...state.categoriesItems }
   const category = categoriesItems[categoryId]

@@ -1,36 +1,33 @@
-import React, { useMemo } from 'react';
-import { Card } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, { useMemo, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export function Header() {
+  const { categories } = useSelector((state: any) => state.manageTypes);
+  const [isOpen, setOpen] = useState(false);
 
-    const { categories } = useSelector((state: any) => state.manageTypes)
-
-    const renderNavbar = useMemo(() => {
-        const keys = Object.keys(categories)
-        return (
-            <ul className='header-ul' >
-                 <li>InventerZilla</li>
-                 <li><Link to='/' >All</Link></li>
-                 {
-                    keys.map((key) => {
-                        const category = categories[key]
-                        return (
-                            <li>
-                                <Link to={`type/${key}`} >{category.categoryName.value}</Link>
-                            </li>
-                        )
-                    })
-                 }
-                 <li><Link to={"manage-types"}>Manage Types</Link></li>
-            </ul>
-        )
-    }, [categories])
+  const renderNavbar = useMemo(() => {
+    const keys = Object.keys(categories);
+    return (
+      <>
+        <a key={'inventer-zilla'} className=" active">InventerZilla</a>
+        <Link key={'all'} to="/">All</Link>
+        {keys.map((key) => {
+          const category = categories[key];
+          return <Link key={key} to={`type/${key}`}>{category.categoryName.value}</Link>;
+        })}
+        <Link key={"manage-types"} to={"manage-types"}>Manage Types</Link>
+      </>
+    );
+  }, [categories]);
 
   return (
-    <header className='common-header'>
-       {renderNavbar}
-    </header>
+    <div className={"topnav" + (isOpen ? " responsive" : "")} id="myTopnav">
+      {renderNavbar}
+
+      <a className="icon">
+        <i onClick={() => setOpen(!isOpen)} className="fa fa-bars"></i>
+      </a>
+    </div>
   );
 }

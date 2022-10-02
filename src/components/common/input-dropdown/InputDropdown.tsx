@@ -25,7 +25,7 @@ export const InputDropdown: React.FC<InputDropdownTypes> = ({
   return (
     <InputGroup className="mb-3">
       <Form.Control
-        value={attribute.value}
+        value={attribute.value || ''}
         onChange={handleChange}
         aria-label="Text input with dropdown button"
       />

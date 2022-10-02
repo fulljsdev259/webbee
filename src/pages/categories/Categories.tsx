@@ -1,10 +1,8 @@
-import React, { useCallback } from "react";
+import React, { } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Category } from "../../components/category";
-import { CustomDropdown } from "../../components/common/dropdown";
-import { newAddableFieldTypes } from "../../services/static-data";
 import Button from 'react-bootstrap/Button';
 import { useDispatch, useSelector } from "react-redux";
 import { reduxConstants } from "../../redux/constants";
@@ -33,8 +31,10 @@ export const Categories: React.FC<CategoriesInterface> = () => {
             )
         })
        }
-        <Col className="category-col mb-4">
-            <Button onClick={addCategory} variant="primary">Add Category</Button>
+        <Col key={'add-category-col'} className="category-col mb-4">
+            <div className="add-btn-wrapper" >
+                <Button onClick={addCategory} variant="primary">Add Category</Button>
+            </div>
         </Col>
       </Row>
     </Container>

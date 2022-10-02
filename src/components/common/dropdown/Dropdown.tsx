@@ -26,7 +26,7 @@ export const CustomDropdown: React.FC<CustomDropdownTypes> = ({
     >
       {items?.map((item, index) => {
         return (
-          <Dropdown.Item onClick={() => onChange(item)} key={item.lable + index} href="#/action-1">
+          <Dropdown.Item onClick={() => onChange(item)} key={item.lable + index}>
             {item.lable}
           </Dropdown.Item>
         );
